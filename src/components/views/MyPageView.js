@@ -15,7 +15,7 @@ const Tag = styled.li``;
 
 const TagButton = styled.button.attrs({type: 'button'})``;
 
-const AlertCheckbox = styled.checkbox``;
+const AlertCheckbox = styled.input.attrs({type: 'checkbox'})``;
 
 const SubmitButton = styled.button.attrs({type: 'button'})``;
 

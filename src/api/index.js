@@ -2,16 +2,23 @@ import axios from 'axios';
 
 export class Fetcher {
     constructor() {
+        this._accessToken = null;
         this._defaultConfig = {
             timeout: 3000,
             headers: {},
         };
     }
 
+    getAccessToken() {
+        return this._accessToken;
+    }
+
     setAccessToken(accessToken) {
         if (accessToken) {
+            this._accessToken = accessToken;
             this._defaultConfig.headers.Authorization = `Bearer ${accessToken}`;
         } else {
+            this._accessToken = null;
             delete this._defaultConfig.headers.Authorization;
         }
     }
@@ -81,5 +88,18 @@ export class AppFetcher extends Fetcher {
             url: '/v1/chat-rooms',
             data: {memberId}
         });
+    }
+
+    async signIn() {
+        try {
+            const {accessToken} = await this.fetch({
+                method: 'POST',
+                url: '/v1/members/login',
+            });
+    
+            this.setAccessToken(accessToken);
+        } catch (err) {
+            this.setAccessToken(null);
+        }
     }
 }
