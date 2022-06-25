@@ -44,12 +44,30 @@ class MyPage extends React.Component {
                 tags={this.state.tags}
                 tagsSelected={this.state.tagsSelected}
                 alertOn={this.state.alertOn}
+                onSubmit={this._handleSubmit}
             />
         );
     }
 
     _setState(state) {
         this.setState({...this.state, ...state});
+    }
+
+    _handleSubmit = ({nickname, tagsSelected, alertOn}) => {
+        const tags = tagsSelected.reduce((tags, selected, idx) => {
+            if (selected) {
+                tags.push(this.state.tags[idx].id);
+            }
+
+            return tags;
+        }, []);
+
+        try {
+            this.context.fetcher.modifyMyInfo({nickname, tags, alertOn});
+            this._setState({nickname, alertOn, tagsSelected});
+        } catch (err) {
+
+        }
     }
 }
 

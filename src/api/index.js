@@ -58,6 +58,14 @@ export class AppFetcher extends Fetcher {
         return {nickname, tags, alertOn};
     }
 
+    async modifyMyInfo({nickname, tags, alertOn}) {
+        return this.fetch({
+            method: 'PUT',
+            url: '/v1/members/me',
+            data: {nickname, tags, alertOn}
+        })
+    }
+
     async getTags() {
         const {result} = this.fetch({
             method: 'GET',
