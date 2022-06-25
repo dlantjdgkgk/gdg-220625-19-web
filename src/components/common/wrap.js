@@ -25,8 +25,10 @@ export function wrap(
 
         componentDidMount() {
             if (this.context.fetcher.getAccessToken()) {
+                console.log('..?');
                 this._signIn();
             } else {
+                console.log('....?');
                 this.context.fetcher.signIn().then(() => {
                     this.context.fetcher.getAccessToken() && this._signIn();
                 });

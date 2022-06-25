@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { v1 as uuid } from 'uuid';
+
+const UAT_KEY = 'uat';
 
 export class Fetcher {
     constructor() {
-        this._accessToken = null;
+        this._accessToken = localStorage.getItem(UAT_KEY) || null;
         this._defaultConfig = {
             timeout: 3000,
             headers: {},
@@ -17,9 +20,11 @@ export class Fetcher {
         if (accessToken) {
             this._accessToken = accessToken;
             this._defaultConfig.headers.Authorization = `Bearer ${accessToken}`;
+            localStorage.setItem(UAT_KEY, this._accessToken);
         } else {
             this._accessToken = null;
             delete this._defaultConfig.headers.Authorization;
+            localStorage.setItem(UAT_KEY, '');
         }
     }
 
@@ -43,10 +48,15 @@ export class Fetcher {
  * 불필요한 연산일 수도 있는데 모델 변환작업을 진행한다.
  */
 export class AppFetcher extends Fetcher {
+    constructor() {
+        super();
+        this._origin = 'http://localhost:4000';
+    }
+
     async getNeighborhoods({lat, lng}) {
         const {result} = await this.fetch({
             method: 'POST',
-            url: '/v1/members/search',
+            url: this._origin + '/v1/members/search',
             data: {
                 lat,
                 lng,
@@ -59,7 +69,7 @@ export class AppFetcher extends Fetcher {
     async getMyInfo() {
         const {nickname, tags, alertOn} = await this.fetch({
             method: 'GET',
-            url: '/v1/members/me',
+            url: this._origin + '/v1/members/me',
         });
 
         return {nickname, tags, alertOn};
@@ -68,7 +78,7 @@ export class AppFetcher extends Fetcher {
     async modifyMyInfo({nickname, tags, alertOn}) {
         return this.fetch({
             method: 'PUT',
-            url: '/v1/members/me',
+            url: this._origin + '/v1/members/me',
             data: {nickname, tags, alertOn}
         })
     }
@@ -76,7 +86,7 @@ export class AppFetcher extends Fetcher {
     async getTags() {
         const {result} = this.fetch({
             method: 'GET',
-            url: '/v1/tags',
+            url: this._origin + '/v1/tags',
         });
 
         return result.map(({id, text}) => ({id, text}));
@@ -85,17 +95,23 @@ export class AppFetcher extends Fetcher {
     async createChatRoom({memberId}) {
         return this.fetch({
             method: 'POST',
-            url: '/v1/chat-rooms',
+            url: this._origin + '/v1/chat-rooms',
             data: {memberId}
         });
     }
 
     async signIn() {
         try {
-            const {accessToken} = await this.fetch({
+            const {data} = await this.fetch({
                 method: 'POST',
-                url: '/v1/members/login',
+                url: this._origin + '/v1/members/login',
+                data: {
+                    uuid: uuid(),
+                },
             });
+            const {accessToken} = data;
+
+            console.log(data, accessToken);
 
             this.setAccessToken(accessToken);
         } catch (err) {
