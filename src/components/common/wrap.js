@@ -24,7 +24,9 @@ export function wrap(ElementConstructor) {
             if (this.context.fetcher.getAccessToken()) {
                 this._signIn();
             } else {
-                this.context.fetcher.signIn().then(() => this._signIn());
+                this.context.fetcher.signIn().then(() => {
+                    this.context.fetcher.getAccessToken() && this._signIn();
+                });
             }
         }
 

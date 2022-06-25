@@ -96,7 +96,7 @@ export class AppFetcher extends Fetcher {
                 method: 'POST',
                 url: '/v1/members/login',
             });
-    
+
             this.setAccessToken(accessToken);
         } catch (err) {
             this.setAccessToken(null);
