@@ -3,34 +3,45 @@ import Neighborhoods from './components/Neighborhoods';
 import MyPage from './components/MyPage';
 import ChatList from './components/ChatList';
 import ChatRoom from './components/ChatRoom';
-import MyPage1 from './components/MyPage1';
 import { AppContext } from './contexts';
+import { Entry } from './components/Entry';
 
 function App({ context }) {
     return (
         <AppContext.Provider value={context}>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' />
-                    <Route
-                        index
-                        element={
-                            <Navigate to='/neighborhoods' replace={true} />
-                        }
-                    />
-                    <Route path='neighborhoods' element={<Neighborhoods />} />
-                    <Route path='chatlist' element={<ChatList />} />
-                    <Route path='chatroom/:chatId' element={<ChatRoom />} />
-                    <Route path='mypage' element={<MyPage />} />
-                    <Route path='mypage1' element={<MyPage1 />} />
-                    <Route
-                        path='*'
-                        element={
-                            <Navigate to='/neighborhoods' replace={true} />
-                        }
-                    />
-                </Routes>
-            </BrowserRouter>
+            <Entry>
+                <BrowserRouter>
+                    <Routes>
+                        <Route path='/'>
+                            <Route
+                                index
+                                element={
+                                    <Navigate
+                                        to='/neighborhoods'
+                                        replace={true}
+                                    />
+                                }
+                            />
+                            <Route
+                                path='neighborhoods'
+                                element={<Neighborhoods />}
+                            />
+                            <Route path='chatlist' element={ChatList} />
+                            <Route path='chatroom/:chatId' element={ChatRoom} />
+                            <Route path='mypage' element={<MyPage />} />
+                            <Route
+                                path='*'
+                                element={
+                                    <Navigate
+                                        to='/neighborhoods'
+                                        replace={true}
+                                    />
+                                }
+                            />
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
+            </Entry>
         </AppContext.Provider>
     );
 }

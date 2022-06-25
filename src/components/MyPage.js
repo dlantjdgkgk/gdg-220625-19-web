@@ -11,7 +11,7 @@ class MyPage extends React.Component {
         this.state = {
             nickname: '',
             tags: [],
-            tagsSelected: [],
+            tagIndex: -1,
             alertOn: false,
         };
     }
@@ -21,17 +21,13 @@ class MyPage extends React.Component {
             this.context.fetcher.getTags(),
             this.context.fetcher.getMyInfo(),
         ]).then(([tags, myInfo]) => {
-            const {nickname, tags: tagIds, alertOn} = myInfo;
-            const tagsSelected = tags.map(() => false);
-
-            tagIds.map(tagId => tags.findIndex(({id}) => id === tagId)).forEach((idx) => {
-                if (idx >= 0) tagsSelected[idx] = true;
-            });
+            const {nickname, tag: tagId, alertOn} = myInfo;
+            const tagIndex = tags.findIndex(({id}) => id === tagId);
 
             this._setState({
                 nickname,
                 tags,
-                tagsSelected,
+                tagIndex,
                 alertOn,
             });
         })
@@ -42,7 +38,7 @@ class MyPage extends React.Component {
             <MyPageView
                 nickname={this.state.nickname}
                 tags={this.state.tags}
-                tagsSelected={this.state.tagsSelected}
+                tagIndex={this.state.tagIndex}
                 alertOn={this.state.alertOn}
                 onSubmit={this._handleSubmit}
             />
@@ -53,18 +49,12 @@ class MyPage extends React.Component {
         this.setState({...this.state, ...state});
     }
 
-    _handleSubmit = ({nickname, tagsSelected, alertOn}) => {
-        const tags = tagsSelected.reduce((tags, selected, idx) => {
-            if (selected) {
-                tags.push(this.state.tags[idx].id);
-            }
-
-            return tags;
-        }, []);
+    _handleSubmit = ({nickname, tagIndex, alertOn}) => {
+        const tag = this.state.tags[tagIndex] || '';
 
         try {
-            this.context.fetcher.modifyMyInfo({nickname, tags, alertOn});
-            this._setState({nickname, alertOn, tagsSelected});
+            this.context.fetcher.modifyMyInfo({nickname, tag, alertOn});
+            this._setState({nickname, alertOn, tagIndex});
         } catch (err) {
 
         }

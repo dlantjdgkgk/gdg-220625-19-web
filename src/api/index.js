@@ -71,23 +71,23 @@ export class AppFetcher extends Fetcher {
             method: 'GET',
             url: this._origin + '/v1/members/me',
         });
-        const {nickname, tags, alertOn} = data;
+        const {nickname, tag, alertOn} = data;
 
-        return {nickname, tags, alertOn};
+        return {nickname, tag, alertOn};
     }
 
-    async modifyMyInfo({nickname, tags, alertOn}) {
-        const {data} = this.fetch({
+    async modifyMyInfo({nickname, tag, alertOn}) {
+        const {data} = await this.fetch({
             method: 'PUT',
             url: this._origin + '/v1/members/me',
-            data: {nickname, tags, alertOn}
+            data: {nickname, tag, alertOn}
         });
 
         return data;
     }
 
     async getTags() {
-        const {data} = this.fetch({
+        const {data} = await this.fetch({
             method: 'GET',
             url: this._origin + '/v1/tags',
         });
@@ -96,7 +96,7 @@ export class AppFetcher extends Fetcher {
     }
 
     async createChatRoom({memberId}) {
-        const {data} = this.fetch({
+        const {data} = await this.fetch({
             method: 'POST',
             url: this._origin + '/v1/chat-rooms',
             data: {memberId}

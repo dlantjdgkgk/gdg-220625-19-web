@@ -38,7 +38,7 @@ app.get('/v1/tags', (req, res) => {
 app.get('/v1/members/me', (req, res) => {
     res.json({
         nickname: '아브라카다브라',
-        tags: 'tag4',
+        tag: 'tag4',
         alertOn: false,
     });
 });
