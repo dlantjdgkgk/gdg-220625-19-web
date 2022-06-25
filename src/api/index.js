@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { v1 as uuid } from 'uuid';
+
+const UAT_KEY = 'uat';
 
 export class Fetcher {
     constructor() {
-        this._accessToken = null;
+        this._accessToken = localStorage.getItem(UAT_KEY) || null;
         this._defaultConfig = {
             timeout: 3000,
             headers: {},
@@ -17,9 +20,11 @@ export class Fetcher {
         if (accessToken) {
             this._accessToken = accessToken;
             this._defaultConfig.headers.Authorization = `Bearer ${accessToken}`;
+            localStorage.setItem(UAT_KEY, this._accessToken);
         } else {
             this._accessToken = null;
             delete this._defaultConfig.headers.Authorization;
+            localStorage.setItem(UAT_KEY, '');
         }
     }
 
@@ -95,6 +100,9 @@ export class AppFetcher extends Fetcher {
             const {accessToken} = await this.fetch({
                 method: 'POST',
                 url: '/v1/members/login',
+                data: {
+                    uuid: uuid(),
+                },
             });
 
             this.setAccessToken(accessToken);
