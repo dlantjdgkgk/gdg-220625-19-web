@@ -1,4 +1,5 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 const GNB_HEIGHT = 80;
 
@@ -16,12 +17,14 @@ display: flex;
 height: ${GNB_HEIGHT}px;
 `;
 
-const GnbArea = styled.button`
+const GnbArea = styled(Link)`
+display: block;
 flex-grow: 1;
 width: 100%;
 height: ${GNB_HEIGHT}px;
 font-size: 16px;
 line-height: ${GNB_HEIGHT}px;
+text-align: center;
 color: #000;
 
 & + & {
@@ -33,9 +36,9 @@ export function Gnb() {
     return (
         <GnbWrap>
             <GnbInner>
-                <GnbArea>주변이웃</GnbArea>
-                <GnbArea>채팅</GnbArea>
-                <GnbArea>마이페이지</GnbArea>
+                <GnbArea to="/neighborhoods">주변이웃</GnbArea>
+                <GnbArea to="/chatlist">채팅</GnbArea>
+                <GnbArea to="/mypage">마이페이지</GnbArea>
             </GnbInner>
         </GnbWrap>
     );

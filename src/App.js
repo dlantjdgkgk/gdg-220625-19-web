@@ -1,14 +1,22 @@
-import styled from "styled-components";
-import { Gnb } from "./components/Gnb";
-
-const Wrap = styled.div`
-width: 100%;
-height: 100vh;
-`;
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Neighborhoods from './components/Neighborhoods';
+import MyPage from './components/MyPage';
+import { Redirect } from './utils/Redirect';
 
 function App() {
   return (
-    <Wrap><Gnb/></Wrap>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/">
+          <Route index element={<Redirect to="/neighborhoods" />} />
+          <Route path="neighborhoods" element={<Neighborhoods />} />
+          <Route path="chatlist" element={null} />
+          <Route path="chatroot/:chatId" element={null} />
+          <Route path="mypage" element={<MyPage />} />
+          <Route path="*" element={<Redirect to="/neighborhoods" />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
