@@ -1,24 +1,36 @@
-import React from 'react';
-import { Navbar, SendText, Chat } from './style';
+import React, { useState, useEffect } from 'react';
+import { Navbar, Rooms } from './style';
+import { wrap } from './common/wrap';
+import { useNavigate } from 'react-router-dom';
+import axios from './axios';
 
-const ChatList = () => {
-    const handleSendText = () => {};
+const ChatListFunction = () => {
+    const [rooms, setRooms] = useState([]);
+    const navigate = useNavigate();
+    const chatId = 5;
+    const handleChatRoom = () => {
+        navigate('/chatroom/' + chatId);
+    };
+    useEffect(() => {}, []);
     return (
         <>
             <Navbar>
-                <h1>채팅방 이름</h1>
+                <h1>방 목록</h1>
             </Navbar>
-            <Chat>
-                <div className='chatWrapper'>
-                    <div className='chatContent'></div>
-                </div>
-            </Chat>
-            <SendText>
-                <input type='text'></input>
-                <button onClick={handleSendText}></button>
-            </SendText>
+            <Rooms>
+                <button onClick={handleChatRoom}></button>
+                {rooms.map((room, index) => {
+                    return <button onClick={handleChatRoom}></button>;
+                })}
+            </Rooms>
+            {/* <Toolbar></Toolbar> */}
         </>
     );
 };
 
-export default ChatList;
+class ChatList extends React.Component {
+    render() {
+        return <ChatListFunction />;
+    }
+}
+export default wrap(ChatList);

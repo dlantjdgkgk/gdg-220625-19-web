@@ -1,19 +1,27 @@
-import styled from 'styled-components';
-import ChatRoom from '../src/components/ChatRoom';
-import ChatList from '../src/components/ChatList';
-import React from 'react';
-
-const Wrap = styled.div`
-    width: 100%;
-    height: 100vh;
-`;
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Neighborhoods from './components/Neighborhoods';
+import MyPage from './components/MyPage';
+import { Redirect } from './utils/Redirect';
+import ChatList from './components/ChatList';
+import ChatRoom from './components/ChatRoom';
 
 function App() {
     return (
-        <Wrap>
-            {/* <ChatRoom /> */}
-            <ChatList />
-        </Wrap>
+        <BrowserRouter>
+            <Routes>
+                <Route path='/'>
+                    <Route index element={<Redirect to='/neighborhoods' />} />
+                    <Route path='neighborhoods' element={<Neighborhoods />} />
+                    <Route path='chatlist' element={<ChatList />} />
+                    <Route path='chatroom/:chatId' element={<ChatRoom />} />
+                    <Route path='mypage' element={<MyPage />} />
+                    <Route
+                        path='*'
+                        element={<Redirect to='/neighborhoods' />}
+                    />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 

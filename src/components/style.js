@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 export const Navbar = styled.div`
-    padding: 20px;
+    div {
+        border-top: 3px solid black;
+    }
+    h1 {
+        padding: 20px;
+    }
 `;
 
 export const Rooms = styled.div`
@@ -21,23 +26,35 @@ export const Chat = styled.div`
     width: 100%;
     height: 80%;
     background-color: white;
-    border-top: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .chatWrapper {
-        width: 60%;
-        height: 70%;
-        display: flex;
-        justify-content: space-between;
-        .chatContent {
-            margin: 10px;
-            width: 40px;
+        width: 80%;
+        height: 100%;
+        .sendContent {
+            width: 160px;
+            margin-top: 40px;
+            float: right;
+            height: 20px;
+            border: 2px solid black;
+        }
+        .receiveContent {
+            width: 160px;
+            margin-top: 40px;
+            float: left;
+            height: 20px;
             border: 2px solid black;
         }
     }
 `;
 export const SendText = styled.div`
-    width: 100%;
-    height: 60px;
-    border: 2px solid black;
+    input {
+        width: 100%;
+        height: 60px;
+        border: 2px solid black;
+        padding-left: 8px;
+    }
     button {
         width: 30%;
         height: 20px;
