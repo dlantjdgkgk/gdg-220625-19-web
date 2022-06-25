@@ -1,95 +1,76 @@
 import React from 'react';
 import styled from 'styled-components';
 import { wrap } from '../common/wrap';
-
-import { useNavigate } from 'react-router-dom';
+import { btnBack } from '../../assets/btnBack';
+import { mypageIcon } from '../../assets/mypageIcon';
 
 const Wrap = styled.div`
-    box-sizing: border-box;
-    height: 100%;
+box-sizing: border-box;
+height: 100%;
+`;
 
-    .goBack {
-        display: flex;
-        padding: 20px;
-        h1 {
-            margin-left: 20px;
-        }
-    }
+const Header = styled.div`
+box-sizing: border-box;
+height: 62px;
+padding: 21px 26px;
+border-bottom: 1px solid #E9E9E9;
+`;
+
+const BtnBack = styled.button.attrs({ type: 'button' })`
+display: inline-block;
+width: 11px;
+height: 19px;
+vertical-align: top;
+`;
+
+const Heading = styled.div`
+display: inline-block;
+margin: 1px 0 0 20px;
 `;
 
 const Nickname = styled.div`
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    padding: 20px;
+box-sizing: border-box;
+height: 70px;
+padding: 0 34px;
+font-size: 13px;
+line-height: 70px;
 `;
 
-const Tags = styled.ul``;
+const TagsHeader = styled.div`
+height: 61px;
+border: solid #E9E9E9;
+border-width: 1px 0;
+font-size: 16px;
+line-height: 61px;
+text-align: center;
+`;
+
+const Tags = styled.ul`
+margin: -6px;
+padding: 32px 27px;
+`;
 
 const Tag = styled.li`
-    display: table-cell;
-    text-align: center;
-    width: 25% !important;
-    padding: 5px 0;
-    display: inline-block;
-    list-style: none;
-    background-color: white;
-    margin-top: 20px;
-    margin-left: 10px;
-    margin-bottom: 10px;
-    border-radius: 30px;
-    border: 1px solid black;
-    line-height: 60px;
-    padding: 10px;
-`;
-
-// const AlertCheckboxLabel = styled.label`
-//     display: inline-block;
-//     width: 60px;
-//     height: 30px;
-//     vertical-align: top;
-//     border-radius: 15px;
-//     background-color: #ccc;
-
-//     &::after {
-//         content: '';
-//         display: inline-block;
-//         width: 27px;
-//         height: 27px;
-//         margin: 2px;
-//         border-radius: 50%;
-//         background-color: #fff;
-//         vertical-align: top;
-//         transition: transform 0.5s;
-//         transform: translateX(0);
-//     }
-// `;
-
-// const AlertCheckbox = styled.input.attrs({ type: 'checkbox' })`
-//     display: block;
-//     overflow: hidden;
-//     width: 1px;
-//     height: 1px;
-//     margin: -1px;
-
-//     &:checked + ${AlertCheckboxLabel} {
-//         background-color: #34c759;
-//         &::after {
-//             transform: translateX(30px);
-//         }
-//     }
-// `;
-
-const KeyWord = styled.div`
-    text-align: center;
-    margin-top: 20px;
-    font-weight: bold;
+display: inline-block;
+height: 38px;
+margin: 6px;
 `;
 
 const TagButton = styled.button.attrs({ type: 'button' })`
-    .active {
-        background-color: red;
-    }
+box-sizing: border-box;
+height: 38px;
+padding: 0 18px;
+border: 1px solid #ABABAB;
+border-radius: 19px;
+${props => props.selected ? `
+border: 1px solid #E48C8C;
+background-color: #E48C8C;
+color: #fff;
+` : `
+border: 1px solid #ABABAB;
+background-color: #fff;
+color: #ABABAB;
+`}
 `;
 
 const SubmitButton = styled.button.attrs({ type: 'button' })``;
@@ -105,56 +86,41 @@ export function MyPageView({ nickname, tags, tagIndex, alertOn, onSubmit }) {
         setAlertOn(alertOn);
     }, [nickname, tagIndex, alertOn]);
 
-    const handleBack = () => {};
     return (
-        <>
-            <Wrap>
-                <div className='goBack'>
-                    <button onClick={handleBack}>
-                        <img src='img/back.png'></img>
-                    </button>
-                    <h1>MY page</h1>
-                </div>
-                <Nickname>
-                    <input
-                        value={_nickname}
-                        onChange={(e) => setNickname(e.target.value)}
-                    ></input>
-                    {/* <AlertCheckbox
-                        id='alertOn'
-                        // checked={_alertOn}
-                        // onChange={(e) => setAlertOn(e.target.value)}
-                    />
-                    <AlertCheckboxLabel htmlFor='alertOn' /> */}
-                </Nickname>
-                <hr />
-                <KeyWord>
-                    <p>키워드</p>
-                </KeyWord>
-
-                <Tags>
-                    {tags?.map(({ id, text }, i) => (
-                        <Tag key={`tag-${id}`}>
-                            <TagButton
-                                selected={i === tagIndex}
-                                onClick={() => setTagIndex(i)}
-                            >
-                                {text}
-                            </TagButton>
-                        </Tag>
-                    ))}
-                </Tags>
-                <SubmitButton
-                    onClick={() =>
-                        onSubmit({
-                            nickname: _nickname,
-                            tagIndex: _tagIndex,
-                            alertOn: _alertOn,
-                        })
-                    }
-                ></SubmitButton>
-            </Wrap>
-        </>
+        <Wrap>
+            <Header>
+                <BtnBack
+                    dangerouslySetInnerHTML={{ __html: btnBack  }}
+                    onClick={() => {
+                        window.history.back();
+                    }}
+                />
+                <Heading dangerouslySetInnerHTML={{ __html: mypageIcon }} />
+            </Header>
+            <Nickname>{nickname}</Nickname>
+            <TagsHeader>키워드</TagsHeader>
+            <Tags>
+                {tags?.map(({ id, text }, i) => (
+                    <Tag key={`tag-${id}`}>
+                        <TagButton
+                            selected={i === _tagIndex}
+                            onClick={() => setTagIndex(i)}
+                        >
+                            {text}
+                        </TagButton>
+                    </Tag>
+                ))}
+            </Tags>
+            {/* <SubmitButton
+                onClick={() =>
+                    onSubmit({
+                        nickname: _nickname,
+                        tagIndex: _tagIndex,
+                        alertOn: _alertOn,
+                    })
+                }
+            >저장</SubmitButton> */}
+        </Wrap>
     );
 }
 export default wrap(MyPageView, { disableGnb: true });
