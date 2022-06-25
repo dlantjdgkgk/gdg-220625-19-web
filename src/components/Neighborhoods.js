@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppContext } from '../contexts';
 import { wrap } from './common/wrap';
+import { Map } from './Map';
 import { NeighborhoodsView } from './views/NeighborhoodsView';
 
 const GEO_STATUS = {
@@ -46,10 +47,21 @@ class Neighborhoods extends React.Component {
     }
 
     render() {
+        const map = (
+            <Map
+                markers={this.state.neighborhoods.map(({memberId, lat, lng}) => ({id: memberId, lat, lng, data: memberId}))}
+                lat={this.state.lat}
+                lng={this.state.lng}
+                width={window.innerWidth - 50}
+                height={window.innerWidth - 50}
+            />
+        )
+
         return (
             <>
                 <NeighborhoodsView
                     neighborhoods={this.state.neighborhoods}
+                    map={map}
                     isLoading={this.state.isLoading}
                     onClickMember={(memberId) => this._createChatRoom(memberId)}
                 />
@@ -64,13 +76,13 @@ class Neighborhoods extends React.Component {
 
     async _setGeoState({lat, lng}) {
         if (this.state.lat !== lat || this.state.lng !== lng) {
-            this.context.fetcher.updateCoordinate({lat, lng});
+            await this.context.fetcher.updateCoordinate({lat, lng});
             this._setState({
                 lat,
                 lng,
                 geoStatus: GEO_STATUS.ALLOWED
             });
-            const result = await this.context.fetcher.getNeighborhoods({lat, lng});
+            const result = await this.context.fetcher.getNeighborhoods();
             this._setState({
                 neighborhoods: result,
                 isLoading: false,
@@ -84,7 +96,7 @@ class Neighborhoods extends React.Component {
         this._setGeoState({
             lat: latitude,
             lng: longitude,
-        })
+        });
     }
 
     _handleGeoLocationPublishFail = () => {

@@ -50,20 +50,25 @@ export class Fetcher {
 export class AppFetcher extends Fetcher {
     constructor() {
         super();
-        this._origin = 'http://localhost:4000';
+        this._origin = 'https://api.catchmetalk.net';
     }
 
-    async getNeighborhoods({lat, lng}) {
+    async getNeighborhoods() {
         const {data} = await this.fetch({
-            method: 'POST',
+            method: 'GET',
             url: this._origin + '/v1/members/search',
-            data: {
-                lat,
-                lng,
-            }
         });
 
-        return data.result.map(({memberId, nickname, tag, lat, lng, distance}) => ({memberId, nickname, tag, lat, lng, distance}));
+        return data.data.map(({id, nickname, tags, lat, lng, distance}) => {
+            return {
+                memberId: id,
+                nickname,
+                tag: tags[0] ? tags[0].id : null,
+                lat,
+                lng,
+                distance
+            };
+        });
     }
 
     async getMyInfo() {
@@ -71,16 +76,16 @@ export class AppFetcher extends Fetcher {
             method: 'GET',
             url: this._origin + '/v1/members/me',
         });
-        const {nickname, tag, alertOn} = data;
+        const {nickname, tags} = data.data;
 
-        return {nickname, tag, alertOn};
+        return {nickname, tag: tags[0] ? tags[0].id : null, alertOn: false};
     }
 
     async modifyMyInfo({nickname, tag, alertOn}) {
         const {data} = await this.fetch({
             method: 'PUT',
             url: this._origin + '/v1/members/me',
-            data: {nickname, tag, alertOn}
+            data: {nickname, tagId: tag}
         });
 
         return data;
@@ -92,7 +97,7 @@ export class AppFetcher extends Fetcher {
             url: this._origin + '/v1/tags',
         });
 
-        return data.result.map(({id, text}) => ({id, text}));
+        return data.result.map(({id, tagName}) => ({id, text: tagName}));
     }
 
     async createChatRoom({memberId}) {
@@ -102,7 +107,7 @@ export class AppFetcher extends Fetcher {
             data: {memberId}
         });
 
-        return data;
+        return {chatId: data.data.chatId};
     }
 
     async signIn() {
@@ -114,7 +119,7 @@ export class AppFetcher extends Fetcher {
                     uuid: uuid(),
                 },
             });
-            const {accessToken} = data;
+            const {accessToken} = data.data;
 
             this.setAccessToken(accessToken);
         } catch (err) {
@@ -127,8 +132,8 @@ export class AppFetcher extends Fetcher {
             method: 'PUT',
             url: this._origin + '/v1/members/me/coordinate',
             data: {
-                lat,
-                lng,
+                latitude: lat,
+                longitude: lng,
             },
         });
     }

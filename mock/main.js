@@ -13,11 +13,12 @@ app.post('/v1/members/login', (req, res) => {
 });
 
 app.post('/v1/members/search', (req, res) => {
+    // 37.5108295,127.0292881
     const members = [
-        {memberId: 'm1', nickname: '라라', tag: '디자이너', lat: 0, lng: 0, distance: 70},
-        {memberId: 'm2', nickname: '치이타', tag: '프론트', lat: 0, lng: 0, distance: 30},
-        {memberId: 'm3', nickname: '파이', tag: '기획자', lat: 0, lng: 0, distance: 50},
-        {memberId: 'm4', nickname: 'BIBA', tag: '백엔드', lat: 0, lng: 0, distance: 20},
+        {memberId: 'm1', nickname: '라라', tag: '디자이너', lat: 37.5108295, lng: 127.0292881, distance: 70},
+        {memberId: 'm2', nickname: '치이타', tag: '프론트', lat: 37.5112295, lng: 127.0292881, distance: 30},
+        {memberId: 'm3', nickname: '파이', tag: '기획자', lat: 37.5104295, lng: 127.0290881, distance: 50},
+        {memberId: 'm4', nickname: 'BIBA', tag: '백엔드', lat: 37.5104295, lng: 127.0292881, distance: 20},
     ];
 
     res.json({ result: members });
@@ -44,9 +45,11 @@ app.get('/v1/members/me', (req, res) => {
 });
 
 app.put('/v1/members/me/coordinate', (req, res) => {
-    const {lat, lng} = req.body;
-    console.log('update coord... ' + lat + ',' + lng);
     res.status(200).send('');
+});
+
+app.post('/v1/chat-rooms', (req, res) => {
+    res.status(200).send({chatId: 'm1'});
 });
 
 app.listen(4000, () => {

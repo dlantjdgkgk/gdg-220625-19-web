@@ -129,7 +129,7 @@ font-size: 16px;
 color: #000;
 `;
 
-export function NeighborhoodsView({neighborhoods, isLoading, onClickMember}) {
+export function NeighborhoodsView({neighborhoods, map, isLoading, onClickMember}) {
     return (
         <>
             <Header dangerouslySetInnerHTML={{ __html: smallLogo }} />
@@ -144,18 +144,23 @@ export function NeighborhoodsView({neighborhoods, isLoading, onClickMember}) {
                             <Loading />
                         </LoadingWrap>
                     )}
-                    {(!isLoading && neighborhoods.length > 0) && <List>
-                        {neighborhoods.map(({memberId, nickname, tag, distance}) => (
-                            <Item key={`neighborhood-${memberId}`}>
-                                <ChatRoomButton onClick={() => onClickMember(memberId)}>
-                                    <Profile dangerouslySetInnerHTML={{ __html: profile }} />
-                                    <Nickname>{nickname}</Nickname>
-                                    <Tag>{tag}</Tag>
-                                    <Distance>{`${distance}m`}</Distance>
-                                </ChatRoomButton>
-                            </Item>
-                        ))}
-                    </List>}
+                    {(!isLoading && neighborhoods.length > 0) && (
+                        <>
+                        {map}
+                        <List>
+                            {neighborhoods.map(({memberId, nickname, tag, distance}) => (
+                                <Item key={`neighborhood-${memberId}`}>
+                                    <ChatRoomButton onClick={() => onClickMember(memberId)}>
+                                        <Profile dangerouslySetInnerHTML={{ __html: profile }} />
+                                        <Nickname>{nickname}</Nickname>
+                                        <Tag>{tag}</Tag>
+                                        <Distance>{`${distance}m`}</Distance>
+                                    </ChatRoomButton>
+                                </Item>
+                            ))}
+                        </List>
+                        </>
+                    )}
                 </Scroller>
             </Wrap>
         </>
