@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppContext } from '../contexts';
 import { wrap } from './common/wrap';
+import { Map } from './Map';
 import { NeighborhoodsView } from './views/NeighborhoodsView';
 
 const GEO_STATUS = {
@@ -50,6 +51,7 @@ class Neighborhoods extends React.Component {
             <>
                 <NeighborhoodsView
                     neighborhoods={this.state.neighborhoods}
+                    map={<Map lat={this.state.lat} lng={this.state.lng} width={window.innerWidth - 50} height={window.innerWidth - 50} />}
                     isLoading={this.state.isLoading}
                     onClickMember={(memberId) => this._createChatRoom(memberId)}
                 />
