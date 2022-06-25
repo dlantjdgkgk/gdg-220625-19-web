@@ -47,11 +47,21 @@ class Neighborhoods extends React.Component {
     }
 
     render() {
+        const map = (
+            <Map
+                markers={this.state.neighborhoods.map(({memberId, lat, lng}) => ({id: memberId, lat, lng, data: memberId}))}
+                lat={this.state.lat}
+                lng={this.state.lng}
+                width={window.innerWidth - 50}
+                height={window.innerWidth - 50}
+            />
+        )
+
         return (
             <>
                 <NeighborhoodsView
                     neighborhoods={this.state.neighborhoods}
-                    map={<Map lat={this.state.lat} lng={this.state.lng} width={window.innerWidth - 50} height={window.innerWidth - 50} />}
+                    map={map}
                     isLoading={this.state.isLoading}
                     onClickMember={(memberId) => this._createChatRoom(memberId)}
                 />
