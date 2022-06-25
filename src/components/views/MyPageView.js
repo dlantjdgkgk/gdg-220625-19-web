@@ -105,8 +105,6 @@ export function MyPageView({ nickname, tags, tagIndex, alertOn, onSubmit }) {
         setAlertOn(alertOn);
     }, [nickname, tagIndex, alertOn]);
 
-    console.log(_tagIndex);
-
     const handleBack = () => {};
     return (
         <>
@@ -135,7 +133,7 @@ export function MyPageView({ nickname, tags, tagIndex, alertOn, onSubmit }) {
                 </KeyWord>
 
                 <Tags>
-                    {tags.map(({ id, text }, i) => (
+                    {tags?.map(({ id, text }, i) => (
                         <Tag key={`tag-${id}`}>
                             <TagButton
                                 selected={i === tagIndex}
