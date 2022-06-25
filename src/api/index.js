@@ -54,7 +54,7 @@ export class AppFetcher extends Fetcher {
     }
 
     async getNeighborhoods({lat, lng}) {
-        const {result} = await this.fetch({
+        const {data} = await this.fetch({
             method: 'POST',
             url: this._origin + '/v1/members/search',
             data: {
@@ -63,41 +63,46 @@ export class AppFetcher extends Fetcher {
             }
         });
 
-        return result.map(({memberId}) => ({memberId}))
+        return data.result.map(({memberId, nickname, tag, lat, lng, distance}) => ({memberId, nickname, tag, lat, lng, distance}));
     }
 
     async getMyInfo() {
-        const {nickname, tags, alertOn} = await this.fetch({
+        const {data} = await this.fetch({
             method: 'GET',
             url: this._origin + '/v1/members/me',
         });
+        const {nickname, tags, alertOn} = data;
 
         return {nickname, tags, alertOn};
     }
 
     async modifyMyInfo({nickname, tags, alertOn}) {
-        return this.fetch({
+        const {data} = this.fetch({
             method: 'PUT',
             url: this._origin + '/v1/members/me',
             data: {nickname, tags, alertOn}
-        })
+        });
+
+        return data;
     }
 
     async getTags() {
-        const {result} = this.fetch({
+        const {data} = this.fetch({
             method: 'GET',
             url: this._origin + '/v1/tags',
         });
 
-        return result.map(({id, text}) => ({id, text}));
+        return data.result.map(({id, text}) => ({id, text}));
     }
 
     async createChatRoom({memberId}) {
-        return this.fetch({
+        const {data} = this.fetch({
             method: 'POST',
             url: this._origin + '/v1/chat-rooms',
             data: {memberId}
         });
+
+        return data;
     }
 
     async signIn() {
@@ -111,11 +116,20 @@ export class AppFetcher extends Fetcher {
             });
             const {accessToken} = data;
 
-            console.log(data, accessToken);
-
             this.setAccessToken(accessToken);
         } catch (err) {
             this.setAccessToken(null);
         }
+    }
+
+    async updateCoordinate({lat, lng}) {
+        return this.fetch({
+            method: 'PUT',
+            url: this._origin + '/v1/members/me/coordinate',
+            data: {
+                lat,
+                lng,
+            },
+        });
     }
 }
