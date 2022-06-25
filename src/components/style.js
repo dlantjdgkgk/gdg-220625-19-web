@@ -95,7 +95,7 @@ export const SendText = styled.div`
 `;
 
 export const MypageNavBar = styled.div`
-    > button {
+    button {
         display: flex;
         align-items: center;
         padding: 20px;

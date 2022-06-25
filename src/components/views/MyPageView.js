@@ -43,42 +43,42 @@ const Tag = styled.li`
     padding: 10px;
 `;
 
-const AlertCheckboxLabel = styled.label`
-    display: inline-block;
-    width: 60px;
-    height: 30px;
-    vertical-align: top;
-    border-radius: 15px;
-    background-color: #ccc;
+// const AlertCheckboxLabel = styled.label`
+//     display: inline-block;
+//     width: 60px;
+//     height: 30px;
+//     vertical-align: top;
+//     border-radius: 15px;
+//     background-color: #ccc;
 
-    &::after {
-        content: '';
-        display: inline-block;
-        width: 27px;
-        height: 27px;
-        margin: 2px;
-        border-radius: 50%;
-        background-color: #fff;
-        vertical-align: top;
-        transition: transform 0.5s;
-        transform: translateX(0);
-    }
-`;
+//     &::after {
+//         content: '';
+//         display: inline-block;
+//         width: 27px;
+//         height: 27px;
+//         margin: 2px;
+//         border-radius: 50%;
+//         background-color: #fff;
+//         vertical-align: top;
+//         transition: transform 0.5s;
+//         transform: translateX(0);
+//     }
+// `;
 
-const AlertCheckbox = styled.input.attrs({ type: 'checkbox' })`
-    display: block;
-    overflow: hidden;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
+// const AlertCheckbox = styled.input.attrs({ type: 'checkbox' })`
+//     display: block;
+//     overflow: hidden;
+//     width: 1px;
+//     height: 1px;
+//     margin: -1px;
 
-    &:checked + ${AlertCheckboxLabel} {
-        background-color: #34c759;
-        &::after {
-            transform: translateX(30px);
-        }
-    }
-`;
+//     &:checked + ${AlertCheckboxLabel} {
+//         background-color: #34c759;
+//         &::after {
+//             transform: translateX(30px);
+//         }
+//     }
+// `;
 
 const KeyWord = styled.div`
     text-align: center;
@@ -120,12 +120,12 @@ export function MyPageView({ nickname, tags, tagIndex, alertOn, onSubmit }) {
                         value={_nickname}
                         onChange={(e) => setNickname(e.target.value)}
                     ></input>
-                    <AlertCheckbox
+                    {/* <AlertCheckbox
                         id='alertOn'
                         // checked={_alertOn}
                         // onChange={(e) => setAlertOn(e.target.value)}
                     />
-                    <AlertCheckboxLabel htmlFor='alertOn' />
+                    <AlertCheckboxLabel htmlFor='alertOn' /> */}
                 </Nickname>
                 <hr />
                 <KeyWord>
