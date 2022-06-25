@@ -15,10 +15,24 @@ export const Rooms = styled.div`
     justify-content: center;
     margin-top: 12px;
     button {
+        display: flex;
+        align-items: center;
         padding: 10px;
         width: 320px;
-        height: 40px;
-        background-color: green;
+        height: 80px;
+        background-color: white;
+        border-radius: 10px;
+        border: 2px solid black;
+        .formation {
+            display: flex;
+            flex: 1;
+            align-items: center;
+        }
+        .nameContent {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
     }
 `;
 

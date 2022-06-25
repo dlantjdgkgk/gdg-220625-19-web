@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Navbar, SendText, Chat } from './style';
 import { wrap } from './common/wrap';
-import axios from './axios';
+import axios from 'axios';
 
 const ChatRoomFunction = () => {
     const [text, setText] = useState('');

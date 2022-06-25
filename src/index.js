@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { AppFetcher } from './api';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './reset.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <App context={{ fetcher: new AppFetcher() }} />
 );
 
 // If you want to start measuring performance in your app, pass a function
