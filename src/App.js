@@ -3,6 +3,7 @@ import Neighborhoods from './components/Neighborhoods';
 import MyPage from './components/MyPage';
 import ChatList from './components/ChatList';
 import ChatRoom from './components/ChatRoom';
+import MyPage1 from './components/MyPage1';
 import { AppContext } from './contexts';
 
 function App({ context }) {
@@ -21,6 +22,7 @@ function App({ context }) {
                     <Route path='chatlist' element={<ChatList />} />
                     <Route path='chatroom/:chatId' element={<ChatRoom />} />
                     <Route path='mypage' element={<MyPage />} />
+                    <Route path='mypage1' element={<MyPage1 />} />
                     <Route
                         path='*'
                         element={

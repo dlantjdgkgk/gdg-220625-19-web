@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navbar, SendText, Chat } from './style';
+import { MypageNavBar, SendText, Chat } from './style';
 import { wrap } from './common/wrap';
 import axios from 'axios';
 
@@ -8,27 +8,48 @@ const ChatRoomFunction = () => {
     const onChange = (e) => {
         setText(e.target.value);
     };
-    const handleSendText = () => {};
+    const handleBack = () => {};
+    const loginAPI = async () => {
+        const payload = {
+            text: text,
+        };
+        const response = await axios.post(
+            'https://api.digital-hamster.net/login',
+            payload
+        );
+        console.log(response);
+    };
+
+    const handleSendText = () => {
+        loginAPI();
+    };
     return (
         <>
-            <Navbar>
-                <h1>채팅방 이름</h1>
-                <div></div>
-            </Navbar>
+            <MypageNavBar>
+                <button onClick={handleBack}>
+                    <img src='img/back.png'></img>
+                    <h1>라라</h1>
+                </button>
+            </MypageNavBar>
             <Chat>
                 <div className='chatWrapper'>
-                    <div className='sendContent'></div>
-                    <div className='receiveContent'></div>
+                    <div className='chat'>
+                        <div className='sendContent'>dddddd</div>
+                    </div>
+                    <div className='chat'>
+                        <div className='receiveContent'>asd</div>
+                    </div>
                 </div>
             </Chat>
             <SendText>
-                <input
-                    type='text'
-                    onChange={onChange}
-                    value={text}
-                    placeholder='채팅 메세지를 입력해주세요'
-                ></input>
-                <button onClick={handleSendText}></button>
+                <form method='post' onSubmit={handleSendText}>
+                    <input
+                        type='text'
+                        onChange={onChange}
+                        value={text}
+                        placeholder='채팅 메세지를 입력해주세요'
+                    ></input>
+                </form>
             </SendText>
         </>
     );
