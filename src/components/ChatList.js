@@ -30,22 +30,33 @@ const ChatListFunction = () => {
             </Navbar>
             <Rooms>
                 <RoomLink to={`/chatroom/${'1'}`}>
-                    <div className='formation'>
-                        <img src='/img/chicken.jpg' width='48' height='48' />
-                        {rooms.map((room, index) => {
-                            return <></>;
-                        })}
+                    {rooms.map((room, index) => {
+                        return (
+                            <>
+                                <div className='formation'>
+                                    <img
+                                        src='/img/chicken.jpg'
+                                        width='48'
+                                        height='48'
+                                    />
 
-                        <div className='nameContent'>
-                            <div className='chatNickName'>닉네임</div>
-                            <div className='chatContent'>
-                                안녕하세요 반갑습니다. 이무성이라고합니다
-                                반가워요. 잘 부탁드립니다.안녕하세요 반갑습니다.
-                                이무성이라고합니다 반가워요. 잘 부탁드립니다.
-                            </div>
-                        </div>
-                    </div>
-                    <div className='chatCreatedAt'>시간 </div>
+                                    <div className='nameContent'>
+                                        <div className='chatNickName'>
+                                            닉네임
+                                        </div>
+                                        <div className='chatContent'>
+                                            안녕하세요 반갑습니다.
+                                            이무성이라고합니다 반가워요. 잘
+                                            부탁드립니다.안녕하세요 반갑습니다.
+                                            이무성이라고합니다 반가워요. 잘
+                                            부탁드립니다.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='chatCreatedAt'>시간 </div>
+                            </>
+                        );
+                    })}
                 </RoomLink>
             </Rooms>
 
