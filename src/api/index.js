@@ -30,9 +30,14 @@ export class Fetcher {
     }
 }
 
+/**
+ * @see
+ * 시간 이슈로 서버 스키마와 클라이언트 스키마를 일치시키는 시간을 줄이기 위해
+ * 불필요한 연산일 수도 있는데 모델 변환작업을 진행한다.
+ */
 export class AppFetcher extends Fetcher {
     async getNeighborhoods({lat, lng}) {
-        return this.fetch({
+        const {result} = await this.fetch({
             method: 'POST',
             url: '/v1/members/search',
             data: {
@@ -40,6 +45,26 @@ export class AppFetcher extends Fetcher {
                 lng,
             }
         });
+
+        return result.map(({memberId}) => ({memberId}))
+    }
+
+    async getMyInfo() {
+        const {nickname, tags, alertOn} = await this.fetch({
+            method: 'GET',
+            url: '/v1/members/me',
+        });
+
+        return {nickname, tags, alertOn};
+    }
+
+    async getTags() {
+        const {result} = this.fetch({
+            method: 'GET',
+            url: '/v1/tags',
+        });
+
+        return result.map(({id, text}) => ({id, text}));
     }
 
     async createChatRoom({memberId}) {
