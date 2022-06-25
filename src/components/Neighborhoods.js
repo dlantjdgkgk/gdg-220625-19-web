@@ -76,13 +76,13 @@ class Neighborhoods extends React.Component {
 
     async _setGeoState({lat, lng}) {
         if (this.state.lat !== lat || this.state.lng !== lng) {
-            this.context.fetcher.updateCoordinate({lat, lng});
+            await this.context.fetcher.updateCoordinate({lat, lng});
             this._setState({
                 lat,
                 lng,
                 geoStatus: GEO_STATUS.ALLOWED
             });
-            const result = await this.context.fetcher.getNeighborhoods({lat, lng});
+            const result = await this.context.fetcher.getNeighborhoods();
             this._setState({
                 neighborhoods: result,
                 isLoading: false,
