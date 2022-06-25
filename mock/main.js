@@ -81,6 +81,27 @@ app.post('/v1/chat-rooms', (req, res) => {
     res.status(200).send({data:{chatId: 'm1'}});
 });
 
+app.get('/v1/chat-rooms', (req, res) => {
+    res.json({
+        data: [
+            {
+                nickname: '라라',
+                recentText: '우연히 봤는데 가까운 거리에 있는 것 같아요! 대화 나눠보고 싶어요~ 우연히 봤는데 가까운 거리에 있는 것 같아요! 대화 나눠보고 싶어요~',
+                time: 1656204308421
+            },
+            {
+                nickname: 'BIBA',
+                recentText: '요즘 개발 직군에 관심있는데 대화 가능하신가요?',
+                time: 1656204308421
+            }, {
+                nickname: 'chiya',
+                recentText: '커피 한잔 하며 실무 꿀팁 공유하고 싶어요~',
+                time: 1656204308421
+            }
+        ]
+    })
+})
+
 app.listen(4000, () => {
     console.log('mock started...');
 });

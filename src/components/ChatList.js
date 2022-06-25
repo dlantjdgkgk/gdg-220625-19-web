@@ -1,67 +1,92 @@
 import React, { useState, useEffect } from 'react';
-import { Navbar, Rooms, RoomLink } from './style';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { wrap } from './common/wrap';
-import axios from 'axios';
+import { useAppContext } from '../contexts';
+import { profile } from '../assets/profile';
+
+const Wrap = styled.div``;
+
+const Header = styled.div`
+padding: 21px 17px 14px;
+`;
+
+const Rooms = styled.div``;
+
+const RoomLink = styled(Link)`
+display: block;
+`;
+
+const Title = styled.h2`
+font-size: 20px;
+line-height: 23px;
+`;
+
+const RoomCard = styled.div`
+box-sizing: border-box;
+height: 72px;
+padding: 12px 22px;
+
+.thumb {
+    float: left;
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 7px;
+    background-color: #D9D9D9;
+}
+.info {
+    overflow: hidden;
+    padding-left: 15px;
+}
+.title {
+    display: block;
+    font-size: 16px;
+    color: #000;
+}
+.desc {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #7D7D7D;
+}
+`;
 
 const ChatListFunction = () => {
+    const fetcher = useAppContext().fetcher;
     const [rooms, setRooms] = useState([]);
 
-    const appendAPI = async () => {
-        await axios
-            .get('')
-            .then((res) => {
-                setRooms(res.data.result);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    };
-
-    // useEffect(() => {
-    //     appendAPI();
-    // }, []);
-
-    //채팅 닉네임 ,채팅 내용, 채팅 시간
+    useEffect(() => {
+        fetcher.getChatList().then((rooms) => {
+            setRooms(rooms);
+        })
+    }, []);
 
     return (
-        <>
-            <Navbar>
-                <h1>채팅</h1>
-            </Navbar>
+        <Wrap>
+            <Header>
+                <Title>채팅</Title>
+            </Header>
             <Rooms>
                 <RoomLink to={`/chatroom/${'1'}`}>
                     {rooms.map((room, index) => {
                         return (
-                            <>
-                                <div className='formation'>
-                                    <img
-                                        src='/img/chicken.jpg'
-                                        width='48'
-                                        height='48'
-                                    />
-
-                                    <div className='nameContent'>
-                                        <div className='chatNickName'>
-                                            닉네임
-                                        </div>
-                                        <div className='chatContent'>
-                                            안녕하세요 반갑습니다.
-                                            이무성이라고합니다 반가워요. 잘
-                                            부탁드립니다.안녕하세요 반갑습니다.
-                                            이무성이라고합니다 반가워요. 잘
-                                            부탁드립니다.
-                                        </div>
-                                    </div>
+                            <RoomCard>
+                                <div className="thumb" dangerouslySetInnerHTML={{ __html: profile }} />
+                                <div className="info">
+                                    <strong className="title">{room.nickname}</strong>
+                                    <p className="desc">{room.recentText}</p>
                                 </div>
-                                <div className='chatCreatedAt'>시간 </div>
-                            </>
+                            </RoomCard>
                         );
                     })}
                 </RoomLink>
             </Rooms>
 
             {/* <Toolbar></Toolbar> */}
-        </>
+        </Wrap>
     );
 };
 

@@ -138,4 +138,14 @@ export class AppFetcher extends Fetcher {
             },
         });
     }
+
+    async getChatList() {
+        const {data} = await this.fetch({
+            method: 'GET',
+            url: this._origin + '/v1/chat-rooms',
+        });
+        const result = data.data;
+
+        return result;
+    }
 }
