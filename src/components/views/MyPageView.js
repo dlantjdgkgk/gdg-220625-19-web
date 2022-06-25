@@ -19,33 +19,31 @@ const AlertCheckbox = styled.input.attrs({type: 'checkbox'})``;
 
 const SubmitButton = styled.button.attrs({type: 'button'})``;
 
-export function MyPageView({nickname, tags, tagsSelected, alertOn, onSubmit}) {
+export function MyPageView({nickname, tags, tagIndex, alertOn, onSubmit}) {
     const [_nickname, setNickname] = React.useState('');
-    const [_tagsSelected, setTagsSelected] = React.useState([]);
+    const [_tagIndex, setTagIndex] = React.useState(-1);
     const [_alertOn, setAlertOn] = React.useState(false);
 
     React.useEffect(() => {
         setNickname(nickname);
-        setTagsSelected(tagsSelected);
+        setTagIndex(tagIndex);
         setAlertOn(alertOn);
-    }, [nickname, tagsSelected, alertOn]);
+    }, [nickname, tagIndex, alertOn]);
 
     return (
         <Wrap>
             <Nickname value={_nickname} onChange={e => setNickname(e.target.value)} />
+            <AlertCheckbox checked={_alertOn} onChange={e => setAlertOn(e.target.value)} />
             <Tags>
                 {tags.map(({id, text}, i) => (
                     <Tag key={`tag-${id}`}>
-                        <TagButton selected={_tagsSelected[i]} onClick={() => {
-                            setTagsSelected(_tagsSelected.map((selected, idx) => idx === i ? !selected : selected));
-                        }}>{text}</TagButton>
+                        <TagButton selected={i === tagIndex} onClick={() => setTagIndex(i)}>{text}</TagButton>
                     </Tag>
                 ))}
             </Tags>
-            <AlertCheckbox checked={_alertOn} onChange={e => setAlertOn(e.target.value)} />
             <SubmitButton onClick={() => onSubmit({
                 nickname: _nickname,
-                tagsSelected: _tagsSelected,
+                tagIndex: _tagIndex,
                 alertOn: _alertOn
             })}>저장</SubmitButton>
         </Wrap>
