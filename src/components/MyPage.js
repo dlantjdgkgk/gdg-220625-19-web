@@ -21,8 +21,8 @@ class MyPage extends React.Component {
             this.context.fetcher.getTags(),
             this.context.fetcher.getMyInfo(),
         ]).then(([tags, myInfo]) => {
-            const {nickname, tag: tagId, alertOn} = myInfo;
-            const tagIndex = tags.findIndex(({id}) => id === tagId);
+            const { nickname, tag: tagId, alertOn } = myInfo;
+            const tagIndex = tags.findIndex(({ id }) => id === tagId);
             console.log(tags, myInfo);
 
             this._setState({
@@ -31,7 +31,7 @@ class MyPage extends React.Component {
                 tagIndex,
                 alertOn,
             });
-        })
+        });
     }
 
     render() {
@@ -47,19 +47,17 @@ class MyPage extends React.Component {
     }
 
     _setState(state) {
-        this.setState({...this.state, ...state});
+        this.setState({ ...this.state, ...state });
     }
 
-    _handleSubmit = ({nickname, tagIndex, alertOn}) => {
+    _handleSubmit = ({ nickname, tagIndex, alertOn }) => {
         const tag = this.state.tags[tagIndex] || '';
 
         try {
-            this.context.fetcher.modifyMyInfo({nickname, tag, alertOn});
-            this._setState({nickname, alertOn, tagIndex});
-        } catch (err) {
-
-        }
-    }
+            this.context.fetcher.modifyMyInfo({ nickname, tag, alertOn });
+            this._setState({ nickname, alertOn, tagIndex });
+        } catch (err) {}
+    };
 }
 
 export default wrap(MyPage);
