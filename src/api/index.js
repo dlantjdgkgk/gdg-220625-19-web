@@ -102,7 +102,7 @@ export class AppFetcher extends Fetcher {
             data: {memberId}
         });
 
-        return data;
+        return {chatId: data.chatId};
     }
 
     async signIn() {

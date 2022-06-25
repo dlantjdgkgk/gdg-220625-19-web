@@ -48,6 +48,10 @@ app.put('/v1/members/me/coordinate', (req, res) => {
     res.status(200).send('');
 });
 
+app.post('/v1/chat-rooms', (req, res) => {
+    res.status(200).send({chatId: 'm1'});
+});
+
 app.listen(4000, () => {
     console.log('mock started...');
 });
