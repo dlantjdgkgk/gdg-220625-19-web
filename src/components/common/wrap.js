@@ -22,11 +22,12 @@ export function wrap(ElementConstructor) {
 
         componentDidMount() {
             if (this.context.fetcher.getAccessToken()) {
-                console.log('..?');
-                this._signIn();
+                setTimeout(() => this._signIn(), 1000);
             } else {
-                console.log('....?');
-                this.context.fetcher.signIn().then(() => {
+                Promise.all([
+                    this.context.fetcher.signIn(),
+                    new Promise(resolve => setTimeout(resolve, 1000)),
+                ]).then(() => {
                     this.context.fetcher.getAccessToken() && this._signIn();
                 });
             }
