@@ -63,7 +63,7 @@ export class AppFetcher extends Fetcher {
             }
         });
 
-        return data.result.map(({memberId}) => ({memberId}))
+        return data.result.map(({memberId, nickname, tag, lat, lng, distance}) => ({memberId, nickname, tag, lat, lng, distance}));
     }
 
     async getMyInfo() {

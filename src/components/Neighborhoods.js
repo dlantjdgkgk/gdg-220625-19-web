@@ -54,14 +54,14 @@ class Neighborhoods extends React.Component {
 
     _handleGetGeoLocationSuccess = async ({coords}) => {
         const {latitude, longitude} = coords;
-            
+
         this._setState({
             ...this.state,
             lat: latitude,
             lng: longitude,
             geoStatus: GEO_STATUS.ALLOWED
         });
-        const {result} = await this.context.fetcher.getNeighborhoods({lat: latitude, lng: longitude});
+        const result = await this.context.fetcher.getNeighborhoods({lat: latitude, lng: longitude});
         this._setState({
             ...this.state,
             latitude,
@@ -71,6 +71,7 @@ class Neighborhoods extends React.Component {
     }
 
     _handleGetGeoLocationFail = () => {
+        console.log("FAIL...");
         this._setState({
             ...this.state,
             lat: 0,
