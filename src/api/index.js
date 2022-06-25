@@ -50,7 +50,8 @@ export class Fetcher {
 export class AppFetcher extends Fetcher {
     constructor() {
         super();
-        this._origin = 'https://api.catchmetalk.net';
+        // this._origin = 'https://api.catchmetalk.net';
+        this._origin = 'http://localhost:4000';
     }
 
     async getNeighborhoods() {
@@ -88,7 +89,7 @@ export class AppFetcher extends Fetcher {
             data: {nickname, tagId: tag}
         });
 
-        return data;
+        return data.data;
     }
 
     async getTags() {
@@ -97,7 +98,7 @@ export class AppFetcher extends Fetcher {
             url: this._origin + '/v1/tags',
         });
 
-        return data.result.map(({id, tagName}) => ({id, text: tagName}));
+        return data.data.map(({id, tagName}) => ({id, text: tagName}));
     }
 
     async createChatRoom({memberId}) {
