@@ -86,7 +86,7 @@ class Neighborhoods extends React.Component {
         this._setGeoState({
             lat: latitude,
             lng: longitude,
-        })
+        });
     }
 
     _handleGeoLocationPublishFail = () => {

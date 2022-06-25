@@ -15,6 +15,14 @@ export class Map extends React.Component {
         });
     }
 
+    shouldComponentUpdate(props) {
+        if (props.lat !== this.props.lat || props.lng !== this.props.lng) {
+            this._map?.setCenter(new window.kakao.maps.LatLng(props.lat, props.lng));
+        }
+
+        return false;
+    }
+
     render() {
         return (
             <div
