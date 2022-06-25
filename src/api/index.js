@@ -60,13 +60,13 @@ export class AppFetcher extends Fetcher {
             url: this._origin + '/v1/members/search',
         });
 
-        return data.data.map(({id, nickname, tags, lat, lng, distance}) => {
+        return data.data.map(({id, nickname, tags, latitude, longitude, distance}) => {
             return {
                 memberId: id,
                 nickname,
-                tag: tags[0] ? tags[0].id : null,
-                lat,
-                lng,
+                tag: tags[0] ? tags[0].text : null,
+                lat: latitude,
+                lng: longitude,
                 distance
             };
         });
