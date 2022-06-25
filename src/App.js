@@ -26,8 +26,11 @@ function App({ context }) {
                                 path='neighborhoods'
                                 element={<Neighborhoods />}
                             />
-                            <Route path='chatlist' element={ChatList} />
-                            <Route path='chatroom/:chatId' element={ChatRoom} />
+                            <Route path='chatlist' element={<ChatList />} />
+                            <Route
+                                path='chatroom/:chatId'
+                                element={<ChatRoom />}
+                            />
                             <Route path='mypage' element={<MyPage />} />
                             <Route
                                 path='*'

@@ -105,6 +105,8 @@ export function MyPageView({ nickname, tags, tagIndex, alertOn, onSubmit }) {
         setAlertOn(alertOn);
     }, [nickname, tagIndex, alertOn]);
 
+    console.log(_tagIndex);
+
     const handleBack = () => {};
     return (
         <>

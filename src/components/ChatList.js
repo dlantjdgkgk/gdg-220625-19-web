@@ -32,6 +32,10 @@ const ChatListFunction = () => {
                 <RoomLink to={`/chatroom/${'1'}`}>
                     <div className='formation'>
                         <img src='/img/chicken.jpg' width='48' height='48' />
+                        {rooms.map((room, index) => {
+                            return <></>;
+                        })}
+
                         <div className='nameContent'>
                             <div className='chatNickName'>닉네임</div>
                             <div className='chatContent'>
