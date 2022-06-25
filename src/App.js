@@ -1,22 +1,24 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Neighborhoods from './components/Neighborhoods';
 import MyPage from './components/MyPage';
-import { Redirect } from './utils/Redirect';
+import { AppContext } from './contexts';
 
-function App() {
+function App({ context }) {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/">
-          <Route index element={<Redirect to="/neighborhoods" />} />
-          <Route path="neighborhoods" element={<Neighborhoods />} />
-          <Route path="chatlist" element={null} />
-          <Route path="chatroot/:chatId" element={null} />
-          <Route path="mypage" element={<MyPage />} />
-          <Route path="*" element={<Redirect to="/neighborhoods" />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AppContext.Provider value={context}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route index element={<Navigate to="/neighborhoods" replace={true} />} />
+            <Route path="neighborhoods" element={<Neighborhoods />} />
+            <Route path="chatlist" element={null} />
+            <Route path="chatroom/:chatId" element={null} />
+            <Route path="mypage" element={<MyPage />} />
+            <Route path="*" element={<Navigate to="/neighborhoods" replace={true} />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </AppContext.Provider>
   );
 }
 

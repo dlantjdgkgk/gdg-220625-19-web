@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Gnb} from './Gnb';
+import { Gnb } from './Gnb';
 
 const Wrap = styled.div`
 width: 100%;

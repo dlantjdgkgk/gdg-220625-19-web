@@ -1,5 +1,5 @@
 import React from 'react';
-import {wrap} from './common/wrap';
+import { wrap } from './common/wrap';
 
 class MyPage extends React.Component {
     render() {
