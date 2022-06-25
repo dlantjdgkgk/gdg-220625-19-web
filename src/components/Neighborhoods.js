@@ -22,6 +22,7 @@ class Neighborhoods extends React.Component {
             geoStatus: GEO_STATUS.INIT,
             neighborhoods: [],
             chatId: '',
+            isLoading: true,
         };
     }
 
@@ -49,6 +50,7 @@ class Neighborhoods extends React.Component {
             <>
                 <NeighborhoodsView
                     neighborhoods={this.state.neighborhoods}
+                    isLoading={this.state.isLoading}
                     onClickMember={(memberId) => this._createChatRoom(memberId)}
                 />
                 {this.state.chatId && <Navigate to={`/chatroom/${this.state.chatId}`} replace={false} />}
@@ -70,7 +72,8 @@ class Neighborhoods extends React.Component {
             });
             const result = await this.context.fetcher.getNeighborhoods({lat, lng});
             this._setState({
-                neighborhoods: result
+                neighborhoods: result,
+                isLoading: false,
             });
         }
     }
