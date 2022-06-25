@@ -121,4 +121,15 @@ export class AppFetcher extends Fetcher {
             this.setAccessToken(null);
         }
     }
+
+    async updateCoordinate({lat, lng}) {
+        return this.fetch({
+            method: 'PUT',
+            url: this._origin + '/v1/members/me/coordinate',
+            data: {
+                lat,
+                lng,
+            },
+        });
+    }
 }

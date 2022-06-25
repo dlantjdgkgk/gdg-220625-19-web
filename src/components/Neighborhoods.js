@@ -15,6 +15,7 @@ class Neighborhoods extends React.Component {
 
     constructor() {
         super();
+        this._geoWatchId = null;
         this.state = {
             lat: 0,
             lng: 0,
@@ -25,15 +26,22 @@ class Neighborhoods extends React.Component {
     }
 
     componentDidMount() {
-        navigator.geolocation.getCurrentPosition(
-            this._handleGetGeoLocationSuccess,
-            this._handleGetGeoLocationFail,
+        this._geoWatchId = navigator.geolocation.watchPosition(
+            this._handleGeoLocationPublishSuccess,
+            this._handleGeoLocationPublishFail,
             {
                 enableHighAccuracy: true,
                 timeout: 5000,
                 maximumAge: 0
             }
         );
+    }
+
+    componentWillUnmount() {
+        if (this._geoWatchId) {
+            navigator.geolocation.clearWatch(this._geoWatchId);
+            this._geoWatchId = null;
+        }
     }
 
     render() {
@@ -52,26 +60,31 @@ class Neighborhoods extends React.Component {
         this.setState({...this.state, ...state});
     }
 
-    _handleGetGeoLocationSuccess = async ({coords}) => {
+    async _setGeoState({lat, lng}) {
+        if (this.state.lat !== lat || this.state.lng !== lng) {
+            this.context.fetcher.updateCoordinate({lat, lng});
+            this._setState({
+                lat,
+                lng,
+                geoStatus: GEO_STATUS.ALLOWED
+            });
+            const result = await this.context.fetcher.getNeighborhoods({lat, lng});
+            this._setState({
+                neighborhoods: result
+            });
+        }
+    }
+    
+    _handleGeoLocationPublishSuccess = async ({coords}) => {
         const {latitude, longitude} = coords;
 
-        this._setState({
-            ...this.state,
+        this._setGeoState({
             lat: latitude,
             lng: longitude,
-            geoStatus: GEO_STATUS.ALLOWED
-        });
-        const result = await this.context.fetcher.getNeighborhoods({lat: latitude, lng: longitude});
-        this._setState({
-            ...this.state,
-            latitude,
-            longitude,
-            neighborhoods: result
-        });
+        })
     }
 
-    _handleGetGeoLocationFail = () => {
-        console.log("FAIL...");
+    _handleGeoLocationPublishFail = () => {
         this._setState({
             ...this.state,
             lat: 0,

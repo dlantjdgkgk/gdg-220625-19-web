@@ -23,6 +23,32 @@ app.post('/v1/members/search', (req, res) => {
     res.json({ result: members });
 });
 
+app.get('/v1/tags', (req, res) => {
+    const result = [
+        {id: 'tag1', text: '개발자'},
+        {id: 'tag2', text: '디자이너'},
+        {id: 'tag3', text: '기획자'},
+        {id: 'tag4', text: '오늘의집'},
+        {id: 'tag5', text: '당근마켓'},
+    ];
+
+    res.json({result});
+});
+
+app.get('/v1/members/me', (req, res) => {
+    res.json({
+        nickname: '아브라카다브라',
+        tags: 'tag4',
+        alertOn: false,
+    });
+});
+
+app.put('/v1/members/me/coordinate', (req, res) => {
+    const {lat, lng} = req.body;
+    console.log('update coord... ' + lat + ',' + lng);
+    res.status(200).send('');
+});
+
 app.listen(4000, () => {
     console.log('mock started...');
 });
