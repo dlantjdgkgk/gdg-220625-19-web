@@ -64,7 +64,7 @@ export class AppFetcher extends Fetcher {
             return {
                 memberId: id,
                 nickname,
-                tag: tags[0] ? tags[0].text : null,
+                tag: (tags && tags[0]) ? tags[0].text : null,
                 lat: latitude,
                 lng: longitude,
                 distance
@@ -79,7 +79,7 @@ export class AppFetcher extends Fetcher {
         });
         const {nickname, tags} = data.data;
 
-        return {nickname, tag: tags[0] ? tags[0].id : null, alertOn: false};
+        return {nickname, tag: (tags && tags[0]) ? tags[0].id : null, alertOn: false};
     }
 
     async modifyMyInfo({nickname, tag, alertOn}) {

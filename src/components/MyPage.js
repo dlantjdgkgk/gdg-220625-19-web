@@ -23,6 +23,7 @@ class MyPage extends React.Component {
         ]).then(([tags, myInfo]) => {
             const { nickname, tag: tagId, alertOn } = myInfo;
             const tagIndex = tags.findIndex(({ id }) => id === tagId);
+            console.log(tags, myInfo);
 
             this._setState({
                 nickname,

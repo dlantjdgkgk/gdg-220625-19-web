@@ -54,11 +54,11 @@ app.get('/v1/members/search', (req, res) => {
 
 app.get('/v1/tags', (req, res) => {
     const result = [
-        {id: 'tag1', text: '개발자'},
-        {id: 'tag2', text: '디자이너'},
-        {id: 'tag3', text: '기획자'},
-        {id: 'tag4', text: '오늘의집'},
-        {id: 'tag5', text: '당근마켓'},
+        {id: 'tag1', tagName: '개발자'},
+        {id: 'tag2', tagName: '디자이너'},
+        {id: 'tag3', tagName: '기획자'},
+        {id: 'tag4', tagName: '오늘의집'},
+        {id: 'tag5', tagName: '당근마켓'},
     ];
 
     res.json({data:result});
@@ -68,7 +68,7 @@ app.get('/v1/members/me', (req, res) => {
     res.json({
         data: {
             nickname: '아브라카다브라',
-            tag: 'tag4',
+            tags: [{id: 'tag4', tagName: '오늘의집'}],
         }
     });
 });
