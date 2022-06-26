@@ -50,8 +50,8 @@ export class Fetcher {
 export class AppFetcher extends Fetcher {
     constructor() {
         super();
-        // this._origin = 'https://api.catchmetalk.net';
-        this._origin = 'http://localhost:4000';
+        this._origin = 'https://api.catchmetalk.net';
+        // this._origin = 'http://localhost:4000';
     }
 
     async getNeighborhoods() {
